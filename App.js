@@ -90,9 +90,17 @@ export default class App extends Component<Props> {
                   coordinate={markers[1].coordinate}
               >
                   <Callout style={styles.plainView}>
-
                       <View>
-                          <Text>This is a plain view</Text>
+                          <Text style={{color:"green"}}>This is a plain view4</Text>
+                      </View>
+                      <View>
+                          <Text style={{color:"red"}}>This is a plain view4</Text>
+                      </View>
+                      <View>
+                          <Text>This is a plain view5</Text>
+                      </View>
+                      <View>
+                          <Text style={{color:"blue"}}>This is a plain view4</Text>
                       </View>
                   </Callout>
               </Marker>
@@ -102,9 +110,17 @@ export default class App extends Component<Props> {
                   calloutAnchor={{ x: 0.5, y: 0.4 }}
               >
                   <Callout tooltip style={styles.customView}>
-                      <View style={{flexDirection: 'row'}}>
-                          <Text style={{backgroundColor: 'blue'}}>1st Callout</Text>
-                          <Text style={{backgroundColor: 'green'}}>2nd Callout</Text>
+                      <View>
+                          <Text style={{color:"green"}}>This is a plain view4</Text>
+                      </View>
+                      <View>
+                          <Text style={{color:"red"}}>This is a plain view4</Text>
+                      </View>
+                      <View>
+                          <Text>This is a plain view5</Text>
+                      </View>
+                      <View>
+                          <Text style={{color:"blue"}}>This is a plain view4</Text>
                       </View>
                   </Callout>
               </Marker>
