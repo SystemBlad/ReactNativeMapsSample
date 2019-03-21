@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Dimensions} from 'react-native';
+import {Platform, StyleSheet, Text, View, Dimensions, TouchableOpacity} from 'react-native';
 import MapView, { Marker, Callout, ProviderPropType } from 'react-native-maps';
 
 const instructions = Platform.select({
@@ -125,6 +125,19 @@ export default class App extends Component<Props> {
                   </Callout>
               </Marker>
           </MapView>
+          <View style={styles.buttonContainer}>
+              <View style={styles.bubble}>
+                  <Text>Tap on markers to see different callouts</Text>
+              </View>
+          </View>
+          <View style={styles.buttonContainer}>
+              <TouchableOpacity onPress={() => this.show()} style={[styles.bubble, styles.button]}>
+                  <Text>Show</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.hide()} style={[styles.bubble, styles.button]}>
+                  <Text>Hide</Text>
+              </TouchableOpacity>
+          </View>
       </View>
     );
   }
@@ -133,10 +146,9 @@ export default class App extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+      ...StyleSheet.absoluteFillObject,
+      justifyContent: 'flex-end',
+      alignItems: 'center',
   },
   welcome: {
     fontSize: 20,
@@ -149,7 +161,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
     map: {
-        width: "100%",
-        height: "100%",
+        ...StyleSheet.absoluteFillObject,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        marginVertical: 20,
+        backgroundColor: 'transparent',
     },
 });
