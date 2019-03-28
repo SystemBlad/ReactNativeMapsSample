@@ -13,8 +13,8 @@ import MapView, {Marker, Callout, ProviderPropType, PROVIDER_GOOGLE} from 'react
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+        'Double tap R on your keyboard to reload,\n' +
+        'Shake or press menu button for dev menu',
 });
 
 type Props = {};
@@ -30,7 +30,6 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 
 export default class App extends Component<Props> {
-    showPopup = false;
     constructor(props) {
         super(props);
 
@@ -61,11 +60,15 @@ export default class App extends Component<Props> {
                     },
                 },
             ],
+            showPopup: false,
         };
     }
 
     show() {
         this.marker1.showCallout();
+        setTimeout(function () {
+            this.setState({showPopup: false});
+        }.bind(this), 1000);
     }
 
     hide() {
@@ -75,7 +78,21 @@ export default class App extends Component<Props> {
     _centerAllMarkers = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (e.nativeEvent.coordinate) {
+            let region = {
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA,
+            };
+            this.map.animateToRegion(region);
+            this.routeMarkerPressedKey = e.nativeEvent.id;
+
+            this.forceUpdate();
+
+        }
         console.log("Marker was clicked");
+
     };
 
     recordEvent(name) {
@@ -96,7 +113,10 @@ export default class App extends Component<Props> {
             <View style={styles.container}>
                 <MapView
                     provider={PROVIDER_GOOGLE}
-                    moveOnMarkerPress={true}
+                    ref={ref => {
+                        this.map = ref;
+                    }}
+                    moveOnMarkerPress={false}
                     style={styles.map}
                     initialRegion={region}
                     onRegionChange={this.recordEvent('Map::onRegionChange')}
@@ -111,19 +131,22 @@ export default class App extends Component<Props> {
 
                 >
                     <Marker
-                        ref={ref => {
-                            this.marker1 = ref;
-                        }}
                         stopPropagation={true}
                         coordinate={markers[0].coordinate}
                         title="This is a native view"
                         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation" // eslint-disable-line max-len
                     />
                     <Marker
+                        ref={ref => {
+                            this.marker1 = ref;
+                        }}
                         coordinate={markers[1].coordinate}
                     >
-                        <Callout style={styles.plainView}>
-
+                        <Callout>
+                            <View>
+                                <Text>Callout</Text>
+                                <Text>Content</Text>
+                            </View>
                         </Callout>
                     </Marker>
                 </MapView>
