@@ -6,6 +6,10 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "android:gradlewCleanNpmResetCache": "cd android && gradlew clean & npm cache clean --force  & npm start -- --reset-cache",
     "android:justRunDev": "node node_modules/react-native/local-cli/cli.js run-android",
+    "ios:ClearCache": "watchman watch-del-all && rm -rf $TMPDIR/react-*",
+    "ios:runDebug": "react-native run-ios",
+    "ios:runDebugDeviceS6": "react-native run-ios  --device 'iPhone de Santiago'",
+    "ios:runReleaseDeviceS6": "react-native run-ios --configuration Release --device 'iPhone de gtsminimac'",
     "test": "jest"
   },
   "dependencies": {
